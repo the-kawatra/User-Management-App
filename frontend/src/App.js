@@ -8,9 +8,10 @@ import EditUser from "./components/EditUser";
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/adduser" element={<AddUser />} />
-      <Route path="/edituser" element={<EditUser />} />
+      <Route path="/" element={<Home />}>
+        <Route path="/adduser" element={<AddUser />} />
+        <Route path="/edituser/:id" element={<EditUser />} />
+      </Route>
     </Routes>
   );
 };

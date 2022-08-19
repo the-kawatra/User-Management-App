@@ -51,4 +51,16 @@ const editUser = async (req, res) => {
   }
 };
 
-export { addUser, editUser };
+const userInfo = async (req, res) => {
+  const userId = req.params.id;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid User Id" });
+  }
+
+  res.json(user);
+};
+
+export { addUser, editUser, userInfo };
