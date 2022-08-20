@@ -51,6 +51,12 @@ const editUser = async (req, res) => {
   }
 };
 
+const allUsers = async (req, res) => {
+  const allUsers = await User.find();
+
+  res.send(allUsers);
+};
+
 const userInfo = async (req, res) => {
   const userId = req.params.id;
 
@@ -60,7 +66,21 @@ const userInfo = async (req, res) => {
     return res.status(401).json({ error: "Invalid User Id" });
   }
 
-  res.json(user);
+  res.send(user);
 };
 
-export { addUser, editUser, userInfo };
+const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid User Id" });
+  }
+
+  await user.remove();
+
+  return res.json({ message: "User removed successfully" });
+};
+
+export { addUser, editUser, allUsers, userInfo, deleteUser };

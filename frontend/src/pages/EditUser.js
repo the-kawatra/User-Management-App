@@ -40,6 +40,7 @@ const EditUser = () => {
             "Content-Type": "application/json",
           },
         });
+        console.log(data);
         setUser({
           name: data.name,
           email: data.email,
@@ -67,7 +68,7 @@ const EditUser = () => {
           },
         }
       );
-      console.log(data);
+      console.log(data.message);
       history("/");
     } catch (error) {
       console.log(error.response.data);
