@@ -1,4 +1,4 @@
-import User from "../models/userSchema.js";
+const User = require("../models/userSchema.js");
 
 const addUser = async (req, res) => {
   const { name, email, age, department } = req.body;
@@ -83,4 +83,4 @@ const deleteUser = async (req, res) => {
   return res.json({ message: "User removed successfully" });
 };
 
-export { addUser, editUser, allUsers, userInfo, deleteUser };
+module.exports = { addUser, editUser, allUsers, userInfo, deleteUser };

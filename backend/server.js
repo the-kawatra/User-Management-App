@@ -1,22 +1,37 @@
-import express from "express";
-import dotenv from "dotenv";
-
-import connectDB from "./db.js";
-import Routes from "./routes/userRoutes.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./db.js");
+const Routes = require("./routes/userRoutes.js");
+const path = require("path");
 
 const app = express();
-
-const PORT = 5000;
 
 dotenv.config();
 connectDB();
 
 app.use(express.json());
+
 app.use("/api/user", Routes);
 
-app.get("/", (req, res) => {
-  res.send("CRUD App");
-});
+// ------------------------------- Deployment --------------------------------
+
+if (process.env.NODE_ENV === "production") {
+  const __dirname1 = path.resolve();
+
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("CRUD App");
+  });
+}
+
+// ------------------------------- Deployment --------------------------------
+
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server started on port: ${PORT}`);
